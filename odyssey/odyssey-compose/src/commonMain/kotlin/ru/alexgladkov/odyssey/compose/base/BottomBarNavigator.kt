@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import ru.alexgladkov.odyssey.compose.controllers.MultiStackRootController
 import ru.alexgladkov.odyssey.compose.controllers.TabNavigationModel
 import ru.alexgladkov.odyssey.compose.local.LocalRootController
-import ru.alexgladkov.odyssey.compose.navigation.bottom_bar_navigation.BottomNavConfiguration
+import ru.alexgladkov.odyssey.compose.navigation.bottom_bar_navigation.BottomNavScreenConfiguration
 import ru.alexgladkov.odyssey.compose.navigation.bottom_bar_navigation.TopNavConfiguration
 import ru.alexgladkov.odyssey.core.toScreenBundle
 
@@ -51,15 +51,16 @@ fun TabNavigator(
 fun BottomBarNavigator(startScreen: String?) {
     val rootController = LocalRootController.current as MultiStackRootController
     val tabItem = rootController.stackChangeObserver.collectAsState().value ?: return
-    val bottomNavConfiguration =
-        rootController.tabsNavModel.navConfiguration as BottomNavConfiguration
+    val bottomNavScreenConfiguration =
+        rootController.tabsNavModel.navConfiguration as BottomNavScreenConfiguration
 
     Column(modifier = Modifier.fillMaxSize()) {
+        bottomNavScreenConfiguration.toolbarContent(rootController.tabItems.indexOf(tabItem))
         TabNavigator(modifier = Modifier.weight(1f), startScreen, tabItem)
 
         BottomNavigation(
-            backgroundColor = bottomNavConfiguration.backgroundColor,
-            elevation = bottomNavConfiguration.elevation
+            backgroundColor = bottomNavScreenConfiguration.bottomNavConfiguration.backgroundColor,
+            elevation = bottomNavScreenConfiguration.bottomNavConfiguration.elevation
         ) {
             rootController.tabItems.forEach { currentItem ->
                 val configuration = currentItem.tabInfo.tabItem.configuration
@@ -69,9 +70,9 @@ fun BottomBarNavigator(startScreen: String?) {
                 BottomNavigationItem(
                     selected = isSelected,
                     selectedContentColor = configuration.selectedColor
-                        ?: bottomNavConfiguration.selectedColor,
+                        ?: bottomNavScreenConfiguration.bottomNavConfiguration.selectedColor,
                     unselectedContentColor = configuration.unselectedColor
-                        ?: bottomNavConfiguration.unselectedColor,
+                        ?: bottomNavScreenConfiguration.bottomNavConfiguration.unselectedColor,
                     icon = {
                         if (isSelected) {
                             configuration.selectedIcon?.let {

@@ -52,7 +52,7 @@ fun FlowBuilder.screen(name: String, content: RenderWithParams<Any?>) {
  */
 fun RootComposeBuilder.bottomNavigation(
     name: String,
-    tabsNavModel: TabsNavModel<BottomNavConfiguration>,
+    tabsNavModel: TabsNavModel<BottomNavScreenConfiguration>,
     builder: MultiStackBuilder.() -> Unit
 ) {
     addMultiStack(

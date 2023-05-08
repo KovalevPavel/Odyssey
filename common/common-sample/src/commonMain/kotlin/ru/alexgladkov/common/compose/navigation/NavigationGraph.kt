@@ -37,7 +37,12 @@ fun RootComposeBuilder.navigationGraph() {
 }
 
 fun RootComposeBuilder.mainScreen() {
-    bottomNavigation(name = NavigationTree.Main.name, tabsNavModel = BottomConfiguration()) {
+    bottomNavigation(
+        name = NavigationTree.Main.name,
+        tabsNavModel = BottomConfiguration { selectedTabIndex ->
+            Toolbar(selectedTabIndex)
+        },
+    ) {
         tab(FeedTab()) {
             screen(name = NavigationTree.Tab.name) {
                 TabScreen(it as? Int)

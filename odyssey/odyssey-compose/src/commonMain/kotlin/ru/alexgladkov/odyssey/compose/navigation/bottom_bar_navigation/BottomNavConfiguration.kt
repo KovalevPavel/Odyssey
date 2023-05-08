@@ -23,19 +23,29 @@ abstract class TabsNavModel<Cfg : TabsNavConfiguration> {
 }
 
 /**
- * Base UI bottom bar configuration
- * @param backgroundColor - bar background color
- * @param selectedColor - tint color for selected tab
- * @param unselectedColor - tint color for unselected tab
- * @param elevation - shadow control for bottom navigation
+ * Base UI bottom bar screen configuration
+ * @param bottomNavConfiguration configuration params for bottom navigation element
+ * @param toolbarContent Toolbar composable
  */
-data class BottomNavConfiguration(
-    val backgroundColor: Color,
-    val selectedColor: Color,
-    val unselectedColor: Color,
-    val elevation: Dp = 8.dp,
+data class BottomNavScreenConfiguration(
+    val bottomNavConfiguration: BottomNavConfiguration,
+    val toolbarContent: @Composable (selectedTabIndex: Int) -> Unit,
 ) : TabsNavConfiguration {
     override val type = TabsNavType.Bottom
+
+    /**
+     * Base UI bottom bar configuration
+     * @param backgroundColor bar background color
+     * @param selectedColor tint color for selected tab
+     * @param unselectedColor tint color for unselected tab
+     * @param elevation shadow control for bottom navigation
+     */
+    data class BottomNavConfiguration(
+        val backgroundColor: Color,
+        val selectedColor: Color,
+        val unselectedColor: Color,
+        val elevation: Dp = 8.dp,
+    )
 }
 
 /**
