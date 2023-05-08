@@ -71,7 +71,7 @@ fun RootComposeBuilder.bottomNavigation(
  */
 fun RootComposeBuilder.topNavigation(
     name: String,
-    tabsNavModel: TabsNavModel<TopNavConfiguration>,
+    tabsNavModel: TabsNavModel<TopNavScreenConfiguration>,
     builder: MultiStackBuilder.() -> Unit
 ) {
     addMultiStack(

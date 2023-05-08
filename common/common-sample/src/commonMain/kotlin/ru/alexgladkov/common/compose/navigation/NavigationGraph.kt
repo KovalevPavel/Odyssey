@@ -62,7 +62,12 @@ fun RootComposeBuilder.mainScreen() {
 }
 
 fun RootComposeBuilder.topNavScreen() {
-    topNavigation(name = NavigationTree.Top.name, tabsNavModel = TopConfiguration()) {
+    topNavigation(
+        name = NavigationTree.Top.name,
+        tabsNavModel = TopConfiguration { selectedTabIndex ->
+            Toolbar(selectedTabIndex)
+        },
+    ) {
         tab(FeedTab()) {
             screen(name = NavigationTree.Tab.name) {
                 TabScreen(it as? Int)

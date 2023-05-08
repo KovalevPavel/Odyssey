@@ -49,15 +49,25 @@ data class BottomNavScreenConfiguration(
 }
 
 /**
- * Base UI top bar configuration
- * @param backgroundColor - bar background color
- * @param selectedColor - tabs content color
+ * Base UI top bar screen configuration
+ * @param topNavConfiguration Base UI top bar configuration
+ * @param toolbarContent Toolbar composable
  */
-data class TopNavConfiguration(
-    val backgroundColor: Color,
-    val contentColor: Color
+data class TopNavScreenConfiguration(
+    val topNavConfiguration: TopNavConfiguration,
+    val toolbarContent: @Composable (selectedTabIndex: Int) -> Unit = {},
 ) : TabsNavConfiguration {
     override val type = TabsNavType.Top
+
+    /**
+     * Base UI top bar configuration
+     * @param backgroundColor bar background color
+     * @param contentColor tabs content color
+     */
+    data class TopNavConfiguration(
+        val backgroundColor: Color,
+        val contentColor: Color
+    )
 }
 
 data class CustomNavConfiguration(

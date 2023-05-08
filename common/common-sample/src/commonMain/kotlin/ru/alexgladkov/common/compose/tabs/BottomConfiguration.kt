@@ -7,7 +7,8 @@ import ru.alexgladkov.odyssey.compose.navigation.bottom_bar_navigation.BottomNav
 import ru.alexgladkov.odyssey.compose.navigation.bottom_bar_navigation.BottomNavScreenConfiguration.BottomNavConfiguration
 import ru.alexgladkov.odyssey.compose.navigation.bottom_bar_navigation.CustomNavConfiguration
 import ru.alexgladkov.odyssey.compose.navigation.bottom_bar_navigation.TabsNavModel
-import ru.alexgladkov.odyssey.compose.navigation.bottom_bar_navigation.TopNavConfiguration
+import ru.alexgladkov.odyssey.compose.navigation.bottom_bar_navigation.TopNavScreenConfiguration
+import ru.alexgladkov.odyssey.compose.navigation.bottom_bar_navigation.TopNavScreenConfiguration.TopNavConfiguration
 
 class BottomConfiguration(
     private val toolbarContent: @Composable (selectedTabIndex: Int) -> Unit = {},
@@ -28,14 +29,19 @@ class BottomConfiguration(
         }
 }
 
-class TopConfiguration : TabsNavModel<TopNavConfiguration>() {
+class TopConfiguration(
+    private val toolbarContent: @Composable (selectedTabIndex: Int) -> Unit = {},
+) : TabsNavModel<TopNavScreenConfiguration>() {
 
-    override val navConfiguration: TopNavConfiguration
+    override val navConfiguration: TopNavScreenConfiguration
         @Composable
         get() {
-            return TopNavConfiguration(
-                backgroundColor = Odyssey.color.secondaryBackground,
-                contentColor = Odyssey.color.primaryText
+            return TopNavScreenConfiguration(
+                topNavConfiguration = TopNavConfiguration(
+                    backgroundColor = Odyssey.color.secondaryBackground,
+                    contentColor = Odyssey.color.primaryText,
+                ),
+                toolbarContent = toolbarContent,
             )
         }
 }

@@ -26,7 +26,7 @@ fun Toolbar(selectedTabIndex: Int) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "TabTitle. Selected tab index $selectedTabIndex",
+            text = "Toolbar title. Selected tab index $selectedTabIndex",
             fontSize = 21.sp,
             color = Odyssey.color.primaryText,
         )

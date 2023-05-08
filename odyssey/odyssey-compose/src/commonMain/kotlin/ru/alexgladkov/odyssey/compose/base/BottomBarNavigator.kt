@@ -9,7 +9,7 @@ import ru.alexgladkov.odyssey.compose.controllers.MultiStackRootController
 import ru.alexgladkov.odyssey.compose.controllers.TabNavigationModel
 import ru.alexgladkov.odyssey.compose.local.LocalRootController
 import ru.alexgladkov.odyssey.compose.navigation.bottom_bar_navigation.BottomNavScreenConfiguration
-import ru.alexgladkov.odyssey.compose.navigation.bottom_bar_navigation.TopNavConfiguration
+import ru.alexgladkov.odyssey.compose.navigation.bottom_bar_navigation.TopNavScreenConfiguration
 import ru.alexgladkov.odyssey.core.toScreenBundle
 
 @Composable
@@ -111,14 +111,18 @@ fun BottomBarNavigator(startScreen: String?) {
 fun TopBarNavigator(startScreen: String?) {
     val rootController = LocalRootController.current as MultiStackRootController
     val tabItem = rootController.stackChangeObserver.collectAsState().value ?: return
-    val bottomNavConfiguration = rootController.tabsNavModel.navConfiguration as TopNavConfiguration
-
+    val bottomNavScreenConfiguration =
+        rootController.tabsNavModel.navConfiguration as TopNavScreenConfiguration
     Column(modifier = Modifier.fillMaxSize()) {
+        val selectedIndex = rootController.tabItems.indexOfFirst { it == tabItem }
+            .coerceAtLeast(0)
+
+        bottomNavScreenConfiguration.toolbarContent(selectedIndex)
+
         TabRow(
-            backgroundColor = bottomNavConfiguration.backgroundColor,
-            contentColor = bottomNavConfiguration.contentColor,
-            selectedTabIndex = rootController.tabItems.indexOfFirst { it == tabItem }
-                .coerceAtLeast(0)
+            backgroundColor = bottomNavScreenConfiguration.topNavConfiguration.backgroundColor,
+            contentColor = bottomNavScreenConfiguration.topNavConfiguration.contentColor,
+            selectedTabIndex = selectedIndex,
         ) {
             rootController.tabItems.forEach { currentItem ->
                 val configuration = currentItem.tabInfo.tabItem.configuration
